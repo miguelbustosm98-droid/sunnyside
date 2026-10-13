@@ -35,26 +35,27 @@ export function TourGallery({ images, title, location }: Props) {
     el.scrollTo({ left: next * el.clientWidth, behavior: 'smooth' });
   };
 
-  if (images.length === 0) {
-    return <div className="aspect-[4/3] w-full rounded-2xl bg-soft" />;
-  }
-
   return (
     <div className="relative overflow-hidden rounded-2xl bg-navy">
-      <div ref={ref} className="no-scrollbar flex snap-x snap-mandatory overflow-x-auto scroll-smooth">
-        {images.map((img, i) => (
-          <div key={img.id} className="relative aspect-[4/3] w-full shrink-0 snap-center md:aspect-[16/9]">
-            <Image
-              src={img.url}
-              alt={img.alt ?? title}
-              fill
-              sizes="(min-width: 1024px) 760px, 100vw"
-              className="object-cover"
-              priority={i === 0}
-            />
-          </div>
-        ))}
-      </div>
+      {images.length === 0 ? (
+        // Sin fotos: fondo de color para que el título siga visible.
+        <div className="aspect-[4/3] w-full md:aspect-[16/9]" />
+      ) : (
+        <div ref={ref} className="no-scrollbar flex snap-x snap-mandatory overflow-x-auto scroll-smooth">
+          {images.map((img, i) => (
+            <div key={img.id} className="relative aspect-[4/3] w-full shrink-0 snap-center md:aspect-[16/9]">
+              <Image
+                src={img.url}
+                alt={img.alt ?? title}
+                fill
+                sizes="(min-width: 1024px) 760px, 100vw"
+                className="object-cover"
+                priority={i === 0}
+              />
+            </div>
+          ))}
+        </div>
+      )}
 
       <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-4 pt-16 text-white">
         <h1 className="text-2xl font-extrabold leading-tight drop-shadow md:text-3xl">{title}</h1>

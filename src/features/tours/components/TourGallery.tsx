@@ -7,11 +7,10 @@ import type { TourImage } from '../types';
 interface Props {
   images: TourImage[];
   title: string;
-  location: string | null;
 }
 
 /** Carrusel con scroll-snap: se desliza con el dedo, sin miniaturas. */
-export function TourGallery({ images, title, location }: Props) {
+export function TourGallery({ images, title }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const [index, setIndex] = useState(0);
 
@@ -36,9 +35,8 @@ export function TourGallery({ images, title, location }: Props) {
   };
 
   return (
-    <div className="relative overflow-hidden rounded-2xl bg-navy">
+    <div className="relative overflow-hidden rounded-3xl bg-soft">
       {images.length === 0 ? (
-        // Sin fotos: fondo de color para que el título siga visible.
         <div className="aspect-[4/3] w-full md:aspect-[16/9]" />
       ) : (
         <div ref={ref} className="no-scrollbar flex snap-x snap-mandatory overflow-x-auto scroll-smooth">
@@ -57,23 +55,18 @@ export function TourGallery({ images, title, location }: Props) {
         </div>
       )}
 
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-4 pt-16 text-white">
-        <h1 className="text-2xl font-extrabold leading-tight drop-shadow md:text-3xl">{title}</h1>
-        {location && <p className="mt-1 text-sm opacity-90">📍 {location}</p>}
-      </div>
-
       {images.length > 1 && (
         <>
-          <span className="absolute right-3 top-3 rounded-full bg-black/55 px-2.5 py-1 text-xs font-semibold text-white">
+          <span className="absolute right-4 top-4 rounded-full bg-black/55 px-3.5 py-1.5 text-sm font-bold tracking-wide text-white">
             {index + 1} / {images.length}
           </span>
           <button type="button" aria-label="Anterior" onClick={() => go(index - 1)}
             className="absolute left-2 top-1/2 hidden h-9 w-9 -translate-y-1/2 rounded-full bg-white/85 text-lg shadow md:block">‹</button>
           <button type="button" aria-label="Siguiente" onClick={() => go(index + 1)}
             className="absolute right-2 top-1/2 hidden h-9 w-9 -translate-y-1/2 rounded-full bg-white/85 text-lg shadow md:block">›</button>
-          <div className="absolute bottom-3 right-4 flex gap-1.5">
+          <div className="absolute inset-x-0 bottom-4 flex justify-center gap-2">
             {images.map((img, i) => (
-              <span key={img.id} className={`h-1.5 rounded-full transition-all ${i === index ? 'w-4 bg-white' : 'w-1.5 bg-white/50'}`} />
+              <span key={img.id} className={`h-2 rounded-full transition-all ${i === index ? 'w-6 bg-white' : 'w-2 bg-white/60'}`} />
             ))}
           </div>
         </>

@@ -1,18 +1,30 @@
 import type { Dict } from '@/i18n';
+import { ClockIcon, IconWithBar, PinIcon, ShieldIcon } from './icons';
 
-export function TrustCard({ t, cancellationHours }: { t: Dict; cancellationHours: number }) {
+interface Props {
+  t: Dict;
+  cancellationHours: number;
+  meetingPoint: string | null;
+}
+
+export function TrustCard({ t, cancellationHours, meetingPoint }: Props) {
   const items = [
-    t.tour.freeCancelHours(cancellationHours),
-    t.tour.securePay,
-    t.tour.support,
-  ];
+    { icon: <ClockIcon />, title: t.tour.freeCancel, sub: t.tour.freeCancelHours(cancellationHours) },
+    { icon: <ShieldIcon />, title: t.tour.securePay, sub: t.tour.securePaySub },
+    meetingPoint ? { icon: <PinIcon />, title: t.tour.meetingPoint, sub: meetingPoint } : null,
+  ].filter(Boolean) as { icon: React.ReactNode; title: string; sub: string }[];
+
   return (
-    <div className="rounded-2xl border border-line bg-soft p-4">
-      <ul className="space-y-1.5 text-sm font-medium">
-        {items.map((i) => (
-          <li key={i} className="flex gap-2"><span className="text-green-600">✔</span>{i}</li>
-        ))}
-      </ul>
-    </div>
+    <ul className="divide-y divide-line rounded-2xl border border-line px-6">
+      {items.map((i) => (
+        <li key={i.title} className="flex items-start gap-6 py-5">
+          <IconWithBar>{i.icon}</IconWithBar>
+          <div>
+            <p className="font-semibold">{i.title}</p>
+            <p className="mt-0.5 text-sm text-navy/55">{i.sub}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
   );
 }

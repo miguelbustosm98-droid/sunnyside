@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { Logo } from '@/components/ui/Logo';
+import { WhatsAppButton } from '@/components/ui/WhatsAppButton';
 import { getDict, isLocale } from '@/i18n';
 import { getPublishedTours, minPriceCents } from '@/features/tours/queries';
 import { formatMoney } from '@/core/money';
@@ -15,7 +16,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   return (
     <main className="mx-auto max-w-5xl px-4 pb-16">
       <Logo />
-      <h1 className="mt-4 text-3xl font-extrabold">{t.home.title}</h1>
+      <h1 className="mt-4 font-serif text-4xl">{t.home.title}</h1>
       <p className="mt-1 text-navy/70">{t.home.subtitle}</p>
       <div className="mt-6 grid gap-5 sm:grid-cols-2">
         {tours.map((tour) => {
@@ -34,6 +35,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           );
         })}
       </div>
+      <WhatsAppButton label={t.tour.needHelp} text={t.brandTagline} />
     </main>
   );
 }

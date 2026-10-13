@@ -9,10 +9,9 @@ import { TrustCard } from '@/features/tours/components/TrustCard';
 import { TourVideo } from '@/features/tours/components/TourVideo';
 import { DescriptionBlocks } from '@/features/tours/components/DescriptionBlocks';
 import { BookingWidget } from '@/features/booking/components/BookingWidget';
-import { BookNowButton } from '@/features/booking/components/BookNowButton';
 import { MobileBookBar } from '@/features/booking/components/MobileBookBar';
 import { TrackView } from '@/features/analytics/TrackView';
-import { formatMoney } from '@/core/money';
+import { WhatsAppButton } from '@/components/ui/WhatsAppButton';
 import { publicEnv } from '@/lib/env';
 
 type Params = Promise<{ locale: string; slug: string }>;
@@ -40,20 +39,22 @@ export default async function TourPage({ params }: { params: Params }) {
   const t = getDict(locale);
 
   const min = minPriceCents(tour);
-  const fmt = (c: number) => formatMoney(c, tour.currency, locale === 'en' ? 'en-US' : 'es-MX');
-  const priceLabel = min !== null ? `${t.tour.from} ${fmt(min)}` : null;
 
   return (
-    <main className="pb-28 lg:pb-12">
+    <main className="pb-32 lg:pb-12">
       <div className="mx-auto max-w-6xl px-4">
         <Logo />
         <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_400px]">
-          <div className="min-w-0 space-y-6">
-            <TourGallery images={tour.images} title={tour.title} location={tour.location} />
+          <div className="min-w-0 space-y-4">
+            <TourGallery images={tour.images} title={tour.title} />
             <QuickFacts tour={tour} t={t} />
-            <TrustCard t={t} cancellationHours={tour.cancellationHours} />
-            <BookNowButton label={t.tour.bookNow} className="lg:hidden" />
+            <TrustCard t={t} cancellationHours={tour.cancellationHours} meetingPoint={tour.meetingPoint} />
 
+            <header className="pt-4">
+              <h1 className="font-serif text-4xl leading-tight">{tour.title}</h1>
+              {tour.subtitle && <p className="mt-2 text-lg font-semibold text-navy/70">{tour.subtitle}</p>}
+              {tour.location && <p className="mt-2 text-sm text-navy/60">📍 {tour.location}</p>}
+            </header>
             {tour.shortDescription && (
               <p className="text-[17px] font-medium leading-relaxed">{tour.shortDescription}</p>
             )}
@@ -66,7 +67,8 @@ export default async function TourPage({ params }: { params: Params }) {
           </aside>
         </div>
       </div>
-      <MobileBookBar label={t.tour.bookNow} priceLabel={priceLabel} />
+      <MobileBookBar label={t.tour.bookNow} />
+      <WhatsAppButton label={t.tour.needHelp} text={t.tour.whatsappText(tour.title)} />
       <TrackView name={tour.title} id={tour.slug} value={min} currency={tour.currency} />
     </main>
   );

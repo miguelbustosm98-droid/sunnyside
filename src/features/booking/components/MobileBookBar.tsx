@@ -1,12 +1,11 @@
 import { BookNowButton } from './BookNowButton';
 
-/** Barra fija inferior en móvil. */
-export function MobileBookBar({ label, priceLabel }: { label: string; priceLabel: string | null }) {
+/** Barra fija inferior en móvil: un solo botón grande. */
+export function MobileBookBar({ label }: { label: string }) {
   return (
-    <div className="fixed inset-x-0 bottom-0 z-30 border-t border-line bg-white/95 p-3 backdrop-blur lg:hidden">
-      <div className="mx-auto flex max-w-xl items-center gap-3">
-        {priceLabel && <span className="shrink-0 text-sm leading-tight text-navy/70">{priceLabel}</span>}
-        <BookNowButton label={label} />
+    <div className="fixed inset-x-0 bottom-0 z-30 bg-white px-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-3 shadow-[0_-8px_24px_rgba(7,29,52,0.08)] lg:hidden">
+      <div className="mx-auto max-w-xl">
+        <BookNowButton label={label} large />
       </div>
     </div>
   );

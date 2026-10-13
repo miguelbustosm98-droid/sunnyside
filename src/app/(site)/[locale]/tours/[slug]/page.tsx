@@ -62,7 +62,7 @@ export default async function TourPage({ params }: { params: Params }) {
           </div>
 
           <aside className="lg:sticky lg:top-4 lg:self-start">
-            <BookingWidget tour={tour} locale={locale} t={t} />
+            <BookingWidget tour={tour} locale={locale} />
           </aside>
         </div>
       </div>

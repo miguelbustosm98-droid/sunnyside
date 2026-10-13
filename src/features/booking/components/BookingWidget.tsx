@@ -5,7 +5,7 @@ import { isoDate, todayInMexico, time12h } from '@/core/dates';
 import { formatMoney } from '@/core/money';
 import { computeTotals } from '@/core/pricing';
 import { availableDates, groupSlotsByDate, type Slot } from '@/core/slots';
-import type { Dict, Locale } from '@/i18n';
+import { getDict, type Dict, type Locale } from '@/i18n';
 import type { Tour } from '@/features/tours/types';
 import { getAttribution } from '@/features/analytics/attribution';
 import { newEventId, track } from '@/features/analytics/track';
@@ -15,12 +15,13 @@ import { OPEN_BOOKING_EVENT } from './BookNowButton';
 interface Props {
   tour: Tour;
   locale: Locale;
-  t: Dict;
 }
 
 const inputCls = 'w-full rounded-xl border border-line px-3 py-2.5 text-[15px] outline-none focus:border-brand focus:ring-2 focus:ring-brand/20';
 
-export function BookingWidget({ tour, locale, t }: Props) {
+export function BookingWidget({ tour, locale }: Props) {
+  // El diccionario tiene funciones: no puede venir como prop desde el servidor.
+  const t = getDict(locale);
   const today = todayInMexico();
   const [ty, tm] = today.split('-').map(Number);
   const [view, setView] = useState({ y: ty, m: tm - 1 });

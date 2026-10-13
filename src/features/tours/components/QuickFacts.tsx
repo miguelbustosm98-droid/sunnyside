@@ -2,12 +2,11 @@ import type { Dict } from '@/i18n';
 import type { Tour } from '../types';
 import { ClockIcon, IconWithBar, UserIcon } from './icons';
 
+/** "3 horas", "1.5 horas"; si no cae en cuartos de hora, "100 min". */
 function formatDuration(minutes: number, t: Dict): string {
-  const h = Math.floor(minutes / 60);
-  const m = minutes % 60;
-  if (!m) return `${h} ${h === 1 ? t.tour.hour : t.tour.hoursLong}`;
-  if (!h) return `${m} ${t.tour.minutes}`;
-  return `${h} ${t.tour.hours} ${m} ${t.tour.minutes}`;
+  const h = minutes / 60;
+  if (minutes < 60 || !Number.isInteger(h * 4)) return `${minutes} ${t.tour.minutes}`;
+  return `${h} ${h === 1 ? t.tour.hour : t.tour.hoursLong}`;
 }
 
 export function QuickFacts({ tour, t }: { tour: Tour; t: Dict }) {
@@ -23,7 +22,7 @@ export function QuickFacts({ tour, t }: { tour: Tour; t: Dict }) {
           <IconWithBar>{f.icon}</IconWithBar>
           <div className="min-w-0">
             <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-navy/50">{f.label}</p>
-            <p className="mt-1 font-serif text-2xl leading-tight">{f.value}</p>
+            <p className="mt-1 whitespace-nowrap font-serif text-2xl leading-tight">{f.value}</p>
           </div>
         </li>
       ))}

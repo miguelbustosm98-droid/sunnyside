@@ -13,6 +13,10 @@ import { MobileBookBar } from '@/features/booking/components/MobileBookBar';
 import { TrackView } from '@/features/analytics/TrackView';
 import { WhatsAppButton } from '@/components/ui/WhatsAppButton';
 import { publicEnv } from '@/lib/env';
+import { formatMoney } from '@/core/money';
+import { getTourMarketing } from '@/features/tours/marketing';
+import { IncludedSection } from '@/features/tours/components/IncludedSection';
+import { SectionCta } from '@/features/tours/components/SectionCta';
 
 type Params = Promise<{ locale: string; slug: string }>;
 
@@ -39,11 +43,21 @@ export default async function TourPage({ params }: { params: Params }) {
   const t = getDict(locale);
 
   const min = minPriceCents(tour);
+  const mk = getTourMarketing(tour.slug, locale);
+  // El CTA muestra la opción más barata que se puede reservar (no el precio por persona).
+  const cheapest = tour.options.length ? Math.min(...tour.options.map((o) => o.priceCents)) : null;
+  const cta = cheapest === null ? t.tour.bookNow : t.tour.bookFrom(formatMoney(cheapest, tour.currency, locale === 'en' ? 'en-US' : 'es-MX'));
 
   return (
     <main className="pb-32 lg:pb-12">
       <div className="mx-auto max-w-6xl px-4">
         <Logo />
+        <header className="mb-5 max-w-3xl">
+          {mk && <p className="mb-2 text-xs font-bold uppercase tracking-[0.18em] text-brand">{mk.eyebrow}</p>}
+          <h1 className="font-display text-[34px] font-extrabold uppercase leading-[0.95] tracking-tight sm:text-5xl">
+            {mk?.headline ?? tour.title}
+          </h1>
+        </header>
         <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_400px]">
           <div className="min-w-0 space-y-4">
             <TourGallery images={tour.images} title={tour.title} />
@@ -51,7 +65,7 @@ export default async function TourPage({ params }: { params: Params }) {
             <TrustCard t={t} cancellationHours={tour.cancellationHours} meetingPoint={tour.meetingPoint} />
 
             <header className="pt-4">
-              <h1 className="font-serif text-4xl leading-tight">{tour.title}</h1>
+              <h2 className="font-serif text-4xl leading-tight">{tour.title}</h2>
               {tour.subtitle && <p className="mt-2 text-lg font-semibold text-navy/70">{tour.subtitle}</p>}
               {tour.location && <p className="mt-2 text-sm text-navy/60">📍 {tour.location}</p>}
             </header>
@@ -59,7 +73,13 @@ export default async function TourPage({ params }: { params: Params }) {
               <p className="text-[17px] font-medium leading-relaxed">{tour.shortDescription}</p>
             )}
             {tour.videoYoutubeId && <TourVideo id={tour.videoYoutubeId} title={t.tour.videoTitle} />}
-            <DescriptionBlocks blocks={tour.blocks} />
+            <DescriptionBlocks blocks={tour.blocks} ctaLabel={cta} />
+            {mk && (
+              <>
+                <IncludedSection included={mk.included} notIncluded={mk.notIncluded} t={t} />
+                <SectionCta label={cta} />
+              </>
+            )}
           </div>
 
           <aside className="lg:sticky lg:top-4 lg:self-start">

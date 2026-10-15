@@ -11,6 +11,8 @@ import { getAttribution } from '@/features/analytics/attribution';
 import { newEventId, track } from '@/features/analytics/track';
 import { Calendar } from './Calendar';
 import { OPEN_BOOKING_EVENT } from './BookNowButton';
+import { VehiclePhoto, vehicleKind, vehicleLabel } from './VehiclePhoto';
+import { StripeBadge } from '@/components/ui/StripeBadge';
 
 interface Props {
   tour: Tour;
@@ -157,11 +159,21 @@ export function BookingWidget({ tour, locale }: Props) {
             <div className="space-y-2">
               {options.map((o) => {
                 const q = qty[o.id] ?? 0;
+                const kind = vehicleKind(o.name, o.travelers);
+                const label = kind ? vehicleLabel(kind, t) : null;
                 return (
-                  <div key={o.id} className={`flex items-center justify-between gap-3 rounded-xl border p-3 ${q ? 'border-brand bg-brand/5' : 'border-line'}`}>
-                    <div className="min-w-0">
-                      <p className="truncate text-sm font-semibold">{o.name}</p>
-                      <p className="text-sm text-navy/70">{formatMoney(o.priceCents, tour.currency, locale === 'en' ? 'en-US' : 'es-MX')}</p>
+                  <div key={o.id} className={`flex items-center justify-between gap-2 rounded-xl border p-2.5 ${q ? 'border-brand bg-brand/5' : 'border-line'}`}>
+                    <div className="flex min-w-0 items-center gap-2.5">
+                      {kind && (
+                        <div className={`flex h-14 w-20 shrink-0 items-center justify-center rounded-lg ${q ? 'bg-white' : 'bg-soft'}`}>
+                          <VehiclePhoto kind={kind} className="h-12 w-[72px]" />
+                        </div>
+                      )}
+                      <div className="min-w-0">
+                        <p className="text-sm font-semibold leading-tight">{label?.name ?? o.name}</p>
+                        {(label?.sub ?? o.description) && <p className="mt-0.5 text-xs leading-snug text-navy/60">{label?.sub ?? o.description}</p>}
+                        <p className="mt-0.5 text-sm font-bold text-navy">{formatMoney(o.priceCents, tour.currency, locale === 'en' ? 'en-US' : 'es-MX')}</p>
+                      </div>
                     </div>
                     <div className="flex items-center gap-2">
                       <button type="button" aria-label="−" onClick={() => setOptionQty(o.id, q - 1, o.maxQuantity)} className="h-8 w-8 rounded-full border border-line text-lg leading-none">−</button>
@@ -227,6 +239,10 @@ export function BookingWidget({ tour, locale }: Props) {
             className="w-full rounded-xl bg-brand px-5 py-3.5 text-base font-extrabold text-white shadow-lg shadow-brand/25 transition enabled:hover:bg-brand-dark disabled:opacity-50">
             {submitting ? t.booking.paying : t.booking.pay}
           </button>
+          <p className="flex items-center justify-center gap-1.5 text-xs text-navy/60">
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" strokeWidth={2.2} strokeLinecap="round" aria-hidden><rect x="5" y="11" width="14" height="9" rx="2" /><path d="M8 11V8a4 4 0 018 0v3" /></svg>
+            {t.booking.securedBy} <StripeBadge />
+          </p>
         </form>
       </div>
     </>

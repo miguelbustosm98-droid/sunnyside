@@ -1,10 +1,11 @@
 import './globals.css';
 import type { Metadata, Viewport } from 'next';
-import { Poppins } from 'next/font/google';
+import { Barlow_Condensed, Poppins } from 'next/font/google';
 import { headers } from 'next/headers';
 import { publicEnv } from '@/lib/env';
 
 const poppins = Poppins({ subsets: ['latin'], weight: ['400', '500', '600', '700', '800', '900'], variable: '--font-poppins', display: 'swap' });
+const barlow = Barlow_Condensed({ subsets: ['latin'], weight: ['600', '700', '800'], variable: '--font-barlow', display: 'swap' });
 
 export const viewport: Viewport = { width: 'device-width', initialScale: 1, themeColor: '#ffffff' };
 
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const lang = (await headers()).get('x-locale') ?? 'es';
   return (
-    <html lang={lang} className={poppins.variable}>
+    <html lang={lang} className={`${poppins.variable} ${barlow.variable}`}>
       <body>{children}</body>
     </html>
   );

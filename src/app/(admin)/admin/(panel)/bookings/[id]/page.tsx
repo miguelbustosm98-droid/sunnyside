@@ -25,6 +25,7 @@ export default async function BookingDetail({ params }: { params: Promise<{ id: 
           <dt className="text-navy/60">Cliente</dt><dd>{b.customer_name}</dd>
           <dt className="text-navy/60">Correo</dt><dd>{b.customer_email}</dd>
           <dt className="text-navy/60">Teléfono</dt><dd>{b.customer_phone} · <a className="text-brand underline" href={`https://wa.me/${wa}`} target="_blank" rel="noreferrer">WhatsApp</a></dd>
+          <dt className="text-navy/60">Ciudad</dt><dd>{b.customer_city || '—'}</dd>
           <dt className="text-navy/60">Hospedaje</dt><dd>{b.lodging || '—'}</dd>
           <dt className="text-navy/60">Comentarios</dt><dd>{b.comments || '—'}</dd>
           <dt className="text-navy/60">Origen</dt><dd className="break-all">{(b.utm as any)?.utm_source ?? '—'} / {(b.utm as any)?.utm_campaign ?? '—'}</dd>

@@ -38,6 +38,7 @@ export const es = {
     name: 'Nombre completo',
     email: 'Correo electrónico',
     phone: 'Teléfono / WhatsApp',
+    city: 'Ciudad de donde nos visita',
     lodging: 'Hotel o alojamiento',
     comments: 'Comentarios (opcional)',
     total: 'Total',

@@ -34,7 +34,7 @@ export function BookingWidget({ tour, locale }: Props) {
   const [qty, setQty] = useState<Record<string, number>>(() =>
     tour.options[0] ? { [tour.options[0].id]: 1 } : {},
   );
-  const [form, setForm] = useState({ name: '', email: '', phone: '', lodging: '', comments: '' });
+  const [form, setForm] = useState({ name: '', email: '', phone: '', city: '', lodging: '', comments: '' });
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [open, setOpen] = useState(false); // solo móvil (bottom sheet)
@@ -225,6 +225,7 @@ export function BookingWidget({ tour, locale }: Props) {
             <input className={inputCls} placeholder={t.booking.name} autoComplete="name" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} required />
             <input className={inputCls} type="email" placeholder={t.booking.email} autoComplete="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} required />
             <input className={inputCls} type="tel" placeholder={t.booking.phone} autoComplete="tel" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} required />
+            <input className={inputCls} placeholder={t.booking.city} autoComplete="address-level2" value={form.city} onChange={(e) => setForm({ ...form, city: e.target.value })} />
             <input className={inputCls} placeholder={t.booking.lodging} value={form.lodging} onChange={(e) => setForm({ ...form, lodging: e.target.value })} />
             <textarea className={inputCls} rows={2} placeholder={t.booking.comments} value={form.comments} onChange={(e) => setForm({ ...form, comments: e.target.value })} />
           </section>

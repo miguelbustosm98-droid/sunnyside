@@ -49,6 +49,7 @@ export async function createPendingBooking(body: CheckoutBody, holdMinutes: numb
     p_locale: body.locale,
     p_utm: { ...(body.attribution?.utm ?? {}), fbp: body.attribution?.fbp, fbc: body.attribution?.fbc, page_url: body.attribution?.pageUrl, event_id: body.attribution?.eventId },
     p_hold_minutes: holdMinutes,
+    p_city: body.customer.city || null,
   } as never);
   if (error) return { ok: false, code: parseBookingError(error.message) };
   const row = (data as any[])?.[0];

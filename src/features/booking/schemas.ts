@@ -18,6 +18,7 @@ export const checkoutBody = z.object({
     name: z.string().trim().min(2).max(120),
     email: z.string().trim().email().max(160),
     phone: z.string().trim().min(7).max(30),
+    city: z.string().trim().max(120).optional().default(''),
     lodging: z.string().trim().max(160).optional().default(''),
     comments: z.string().trim().max(1000).optional().default(''),
   }),

@@ -40,6 +40,7 @@ export const en: Dict = {
     name: 'Full name',
     email: 'Email',
     phone: 'Phone / WhatsApp',
+    city: 'City you are visiting from',
     lodging: 'Hotel or lodging',
     comments: 'Comments (optional)',
     total: 'Total',

@@ -64,11 +64,7 @@ export default async function TourPage({ params }: { params: Params }) {
             <QuickFacts tour={tour} t={t} />
             <TrustCard t={t} cancellationHours={tour.cancellationHours} meetingPoint={tour.meetingPoint} />
 
-            <header className="pt-4">
-              <h2 className="font-serif text-4xl leading-tight">{tour.title}</h2>
-              {tour.subtitle && <p className="mt-2 text-lg font-semibold text-navy/70">{tour.subtitle}</p>}
-              {tour.location && <p className="mt-2 text-sm text-navy/60">📍 {tour.location}</p>}
-            </header>
+            <SectionCta label={cta} />
             {tour.shortDescription && (
               <p className="text-[17px] font-medium leading-relaxed">{tour.shortDescription}</p>
             )}

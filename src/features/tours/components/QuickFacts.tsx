@@ -22,7 +22,7 @@ export function QuickFacts({ tour, t }: { tour: Tour; t: Dict }) {
           <IconWithBar>{f.icon}</IconWithBar>
           <div className="min-w-0">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-navy/50">{f.label}</p>
-            <p className="mt-1 whitespace-nowrap font-display text-[32px] font-bold uppercase leading-none tracking-wide lg:text-3xl">{f.value}</p>
+            <p className="mt-1 whitespace-nowrap font-display text-[27px] font-bold uppercase leading-none tracking-wide lg:text-3xl">{f.value}</p>
           </div>
         </li>
       ))}

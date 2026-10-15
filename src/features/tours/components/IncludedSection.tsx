@@ -18,7 +18,7 @@ export function IncludedSection({ included, notIncluded, t }: { included: string
   ];
   return (
     <section className="pt-2">
-      <h3 className="mb-3 text-lg font-bold">{t.tour.includedTitle}</h3>
+      <h3 className="mb-3 font-display text-[26px] font-extrabold uppercase leading-none tracking-tight">{t.tour.includedTitle}</h3>
       <div className="grid gap-3 sm:grid-cols-2">
         {cols.map((c) => (
           <div key={c.title} className="rounded-2xl border border-line p-5">

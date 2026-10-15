@@ -1,12 +1,13 @@
 import type { DescriptionBlock } from '@/core/blocks';
 import { SectionCta } from './SectionCta';
 
-/** Tras cada lista (las secciones de "qué vas a vivir") se intercala un CTA. */
-export function DescriptionBlocks({ blocks, ctaLabel }: { blocks: DescriptionBlock[]; ctaLabel: string }) {
+/** Tras cada lista se intercala un CTA; los textos rotan para no repetir el mismo botón. */
+export function DescriptionBlocks({ blocks, ctaLabels, ctaNote }: { blocks: DescriptionBlock[]; ctaLabels: string[]; ctaNote?: string }) {
+  let n = 0;
   return (
     <div className="space-y-4 text-[15px] leading-relaxed text-navy/85">
       {blocks.map((b, i) => {
-        if (b.type === 'h') return <h3 key={i} className="pt-2 text-lg font-bold text-navy">{b.text}</h3>;
+        if (b.type === 'h') return <h3 key={i} className="pt-4 font-display text-[26px] font-extrabold uppercase leading-none tracking-tight text-navy">{b.text}</h3>;
         if (b.type === 'p') return <p key={i}>{b.text}</p>;
         return (
           <div key={i} className="space-y-4">
@@ -18,7 +19,7 @@ export function DescriptionBlocks({ blocks, ctaLabel }: { blocks: DescriptionBlo
                 ))}
               </ul>
             </div>
-            <SectionCta label={ctaLabel} />
+            <SectionCta label={ctaLabels[n++ % ctaLabels.length]} note={ctaNote} />
           </div>
         );
       })}

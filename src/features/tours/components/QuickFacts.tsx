@@ -12,7 +12,7 @@ function formatDuration(minutes: number, t: Dict): string {
 export function QuickFacts({ tour, t }: { tour: Tour; t: Dict }) {
   const facts = [
     { icon: <ClockIcon />, label: t.tour.duration, value: formatDuration(tour.durationMinutes, t) },
-    { icon: <UserIcon />, label: t.tour.minimum, value: String(tour.minTravelers) },
+    { icon: <UserIcon />, label: t.tour.minimum, value: t.tour.persons(tour.minTravelers) },
   ];
 
   return (

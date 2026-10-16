@@ -10,6 +10,8 @@ export interface TourMarketing {
   headline: string;
   /** Subtítulo bajo el H1: respalda la promesa con hechos concretos. */
   subheadline?: string;
+  /** Clip POV para la primera diapositiva del carrusel (archivos en /public/videos). */
+  video?: { src: string; poster: string };
   included: string[];
   notIncluded: string[];
   faq?: { q: string; a: string }[];
@@ -22,6 +24,7 @@ const content: Record<string, Record<Locale, TourMarketing>> = {
     es: {
       eyebrow: 'Ixtapa Zihuatanejo · Tour guiado en cuatrimoto',
       headline: 'Conoce Ixtapa Zihuatanejo en cuatrimoto y vive la aventura que soñaste para tus vacaciones',
+      video: { src: '/videos/atv-pov.mp4', poster: '/videos/atv-pov.jpg' },
       subheadline:
         'Tú vas al volante. Cuatrimotos automáticas y fáciles de manejar, guía contigo todo el camino y equipo de seguridad incluido.',
       included: [
@@ -73,6 +76,7 @@ const content: Record<string, Record<Locale, TourMarketing>> = {
     en: {
       eyebrow: 'Ixtapa Zihuatanejo · Guided ATV tour',
       headline: 'Discover Ixtapa Zihuatanejo on an ATV and live the adventure you dreamed of for your vacation',
+      video: { src: '/videos/atv-pov.mp4', poster: '/videos/atv-pov.jpg' },
       subheadline:
         "You're in the driver's seat. Automatic, easy-to-drive ATVs, a guide by your side the whole way and all safety gear included.",
       included: [

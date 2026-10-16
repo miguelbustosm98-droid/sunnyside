@@ -67,7 +67,7 @@ export default async function TourPage({ params }: { params: Params }) {
         </header>
         <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_400px]">
           <div className="min-w-0 space-y-4">
-            <TourGallery images={tour.images} title={tour.title} />
+            <TourGallery images={tour.images} title={tour.title} video={mk?.video} />
             <QuickFacts tour={tour} t={t} />
             <TrustCard t={t} cancellationHours={tour.cancellationHours} meetingPoint={tour.meetingPoint} />
 
